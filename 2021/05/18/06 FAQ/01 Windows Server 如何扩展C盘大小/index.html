@@ -415,6 +415,10 @@ var _hmt = _hmt || [];
 </h1>
 <div class="article-meta">
 	
+		<span>
+			阅读量:<span id="/2021/05/18/06%20FAQ/01%20Windows%20Server%20%E5%A6%82%E4%BD%95%E6%89%A9%E5%B1%95C%E7%9B%98%E5%A4%A7%E5%B0%8F/" class="leancloud_visitors" data-flag-title=""></span>
+		</span>
+	
 	<span>zhucui</span>
 	<span>2021-05-18 18:31:02</span>
 		<div id="article-categories">
@@ -488,19 +492,51 @@ var _hmt = _hmt || [];
 			notify: false,
 			verify: false,
 			path: window.location.pathname,
-			appId: '',
-			appKey: '',
+			appId: '30PWQMiDhcrKv8lvG4oJUA4M-gzGzoHsz',
+			appKey: 'icgGElRMJk4zM3iqAT8OjPGX',
 			placeholder: '请输入评论',
 			avatar: 'retro',
 			recordIP: false
 		})
 	
 	
+    // 显示次数
+		function showTime(Counter) {
+			var query = new AV.Query("Counter");
+			if($(".leancloud_visitors").length > 0){
+				var url = $(".leancloud_visitors").attr('id').trim();
+				// where field
+				query.equalTo("words", url);
+				// count
+				query.count().then(function (number) {
+					// There are number instances of MyClass where words equals url.
+					$(document.getElementById(url)).text(number?  number : '--');
+				}, function (error) {
+					// error is an instance of AVError.
+				});
+			}
+		}
+		// 追加pv
+		function addCount(Counter) {
+			var url = $(".leancloud_visitors").length > 0 ? $(".leancloud_visitors").attr('id').trim() : 'wujun234.github.io';
+			var Counter = AV.Object.extend("Counter");
+			var query = new Counter;
+			query.save({
+				words: url
+			}).then(function (object) {
+			})
+		}
+		$(function () {
+			var Counter = AV.Object.extend("Counter");
+			addCount(Counter);
+			showTime(Counter);
+		});
+	
 </script>
 	</div>
 	<div id="footer">
 	<p>
-	©2019-<span id="footerYear"></span> 
+	©2021-<span id="footerYear"></span> 
 	<a href="/">zhucui</a> 
 	
 	
