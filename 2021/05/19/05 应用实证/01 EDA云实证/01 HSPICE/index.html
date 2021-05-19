@@ -274,7 +274,7 @@ var _hmt = _hmt || [];
 									
 							<ul>
 								<li class="file active">
-									<a href="/2021/05/18/05%20%E5%BA%94%E7%94%A8%E5%AE%9E%E8%AF%81/01%20EDA%E4%BA%91%E5%AE%9E%E8%AF%81/01%20HSPICE/">
+									<a href="/2021/05/19/05%20%E5%BA%94%E7%94%A8%E5%AE%9E%E8%AF%81/01%20EDA%E4%BA%91%E5%AE%9E%E8%AF%81/01%20HSPICE/">
 										01 HSPICE
 									</a>
 								</li>
@@ -416,11 +416,11 @@ var _hmt = _hmt || [];
 <div class="article-meta">
 	
 		<span>
-			阅读量:<span id="/2021/05/18/05%20%E5%BA%94%E7%94%A8%E5%AE%9E%E8%AF%81/01%20EDA%E4%BA%91%E5%AE%9E%E8%AF%81/01%20HSPICE/" class="leancloud_visitors" data-flag-title=""></span>
+			阅读量:<span id="/2021/05/19/05%20%E5%BA%94%E7%94%A8%E5%AE%9E%E8%AF%81/01%20EDA%E4%BA%91%E5%AE%9E%E8%AF%81/01%20HSPICE/" class="leancloud_visitors" data-flag-title=""></span>
 		</span>
 	
 	<span>zhucui</span>
-	<span>2021-05-18 22:52:50</span>
+	<span>2021-05-19 11:15:28</span>
 		<div id="article-categories">
     
 		<span>Categories：</span>
@@ -436,15 +436,181 @@ var _hmt = _hmt || [];
 </div>
 
 <div id="article-content">
-	
-
-	<div class="row">
-    <embed src="/pdf/EDA云实证系列Vol.HSPICE.pdf" width="100%" height="550" type="application/pdf">
-	</div>
-
-
-
-
+	<hr>
+<h2><span id="title">title</span></h2><p>[toc]</p>
+<h2><span id="简介">简介</span></h2><p>作为最早的电子设计自动化软件，我们的EDA云实证系列从SPICE开始，再合适不过。在它出现之前，人们分析电路，用的是纸笔或者搭电路板。随着电路规模增大，手工明显跟不上。</p>
+<p>于是，1971年，SPICE诞生了。全称“Simulation Program with Integrates Circuit “。</p>
+<p>H-SPICE是随着产业环境及电路设计技术的发展与升级，以“SPICE2”为基础加以改进而成的商业软件产品，现在属于Synopsys。</p>
+<p>既然有了新的计算机辅助工具，那问题就来了：</p>
+<p><strong>怎么才能跑得更快一点？</strong></p>
+<p><strong>怎么才能运行更大规模的集成电路？</strong></p>
+<ul>
+<li><p><strong>答案一：算法改进</strong>。这属于数据领域，很难。</p>
+</li>
+<li><p><strong>答案二：摩尔定律</strong>。从上世纪70年代初到如今，SPICE从只能仿真十几个</p>
+<p>元器件到今天可以仿真上千万个元器件的电路。但已经几十年没有太大的变化了。</p>
+</li>
+<li><p><strong>答案三：计算架构升级，从单核到多核，单线程到多线程。</strong></p>
+</li>
+<li><p><strong>答案四：Cloud HPC云端高性能计算。</strong>谈概念过于抽象，我们今天拿实证说话。</p>
+</li>
+</ul>
+<h2><span id="实证背景信息">实证背景信息</span></h2><p><strong>用户需求</strong></p>
+<p>作为一家纯IC设计公司，C社成立已超过十年。公司在本地部署了由十多台机器组成的计算集群，但目前面临的最大问题依然是算力不足。特别是面对每年十次左右的算力高峰期时，基本上没有太好的办法。</p>
+<p><strong>对云的认知</strong></p>
+<p>C社相关负责人表示：算力不足是目前IC设计行业普遍面临的问题。对于EDA上云，公司之前没有尝试过，对云模式和架构也并不了解，在数据安全性方面也存在一定的顾虑。</p>
+<p>不过该负责人对于EDA上云早有耳闻，也颇感兴趣，愿意进行一定的尝试。毕竟上云若真的能够加快运算速度，就意味着可以更早展开研究，从而提升项目的整体进度。</p>
+<h2><span id="实证目标">实证目标</span></h2><ul>
+<li><strong>HSPICE任务能否在云端运行？</strong></li>
+<li><strong>云端资源是否能适配HSPICE任务需求？</strong></li>
+<li><strong>fastone平台能否有效解决目前业务问题？</strong></li>
+<li><strong>相比传统手动模式，云端计算集群的自动化部署，有哪些好处？</strong></li>
+</ul>
+<h2><span id="实证参数">实证参数</span></h2><table>
+<thead>
+<tr>
+<th align="center">平台</th>
+<th align="center">应用</th>
+<th align="center">使用场景</th>
+<th align="center">License配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">fastone企业版产品</td>
+<td align="center">HSPICE</td>
+<td align="center">仿真模拟电路、混合信号电路、精确数字电路、建立SoC的时序及功耗单元库、分析系统级的信号完整性等。</td>
+<td align="center">EDA License Server设置在本地。</td>
+</tr>
+</tbody></table>
+<p><strong>技术架构图：</strong></p>
+<p>用户登录VDI，使用fastone算力运营平台根据实际计算需求自动创建、销毁集群，完成计算任务。</p>
+<p><img src="/images/9" alt="image-20210518230922897"></p>
+<h2><span id="步骤一硬件选择">步骤一：硬件选择</span></h2><p><strong><font size="4">选择适合HSPICE应用的配置</font></strong></p>
+<p>云端可以选择的机型有几百种，配置、价格差异极大。</p>
+<p>我们首先需要挑选出既能满足HSPICE应用需求，又具备性价比的机型。</p>
+<p>已知用户的本地硬件配置：</p>
+<p><font color="\#00dd00" size="4">Xeon(R) Gold 6244 CPU @ 3.60GHz，512GB Memory</font></p>
+<p>本地配置不仅主频高，内存也相当大。</p>
+<p>我们推荐的云端硬件配置：</p>
+<p><font color="\#00dd00" size="4">96 vCPU, 3.6 GHz, 2nd Gen Intel Xeon Platinum 8275CL,192 GiB Memory</font></p>
+<table>
+<thead>
+<tr>
+<th align="center">本地</th>
+<th align="center">云</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Xeon(R) Gold 6244 CPU</td>
+<td align="center"><font color="\#00dd00" size="4">2nd Gen Intel Xeon Platinum 8275CL</font></td>
+</tr>
+<tr>
+<td align="center">3.60GHz</td>
+<td align="center"><font color="\#00dd00" size="4">3.6 GHz</font></td>
+</tr>
+<tr>
+<td align="center">512GB Memory</td>
+<td align="center"><font color="\#00dd00" size="4">192 GiB Memory</font></td>
+</tr>
+</tbody></table>
+<p>推荐理由：</p>
+<ol>
+<li>该应用对CPU主频要求较高，但内存要求并不大；</li>
+<li>我们选择了计算优化型云端实例，即具备高性价比的高主频机器。</li>
+</ol>
+<p>C社的本地硬件在HSPICE以外，还需处理一些需要大内存的后端任务，所</p>
+<p>以需要在配置上兼顾各种资源需求，在当前项目不可避免会造成一定的</p>
+<p>资源浪费。</p>
+<h2><span id="步骤二云端部署">步骤二：云端部署</span></h2><p><strong><font size="4">手动模式 VS 自动部署</font></strong></p>
+<blockquote>
+<p><strong>我们先看手动模式</strong></p>
+</blockquote>
+<p><img src="/images/13" alt="image-20210518233812098"></p>
+<p><strong>在手动模式下，通常都是先构建一个固定规模的集群，然后提交任务，全部任务结束后，关闭集群。</strong></p>
+<p><strong>想一下一个几千core的集群拉起来之后，第二、三、四步手动配置的时间里，所有机器一直都是开启状态，也就是说，烧钱中。</strong></p>
+<blockquote>
+<p><strong>再看看我们的自动化部署</strong></p>
+</blockquote>
+<p>第一步，不需要；</p>
+<p>第二步，只需要点击几个按钮，5-10分钟即可开启集群；</p>
+<p>第三步，我们有Auto-Scale功能，自动开关机。</p>
+<p>另外，我们还自带资源的管理和监控功能。</p>
+<p><strong>fastone的Auto-Scale功能可以自动监控用户提交的任务数量和资源的需求，动态按需地开启所需算力资源，在提升效率的同时有效降低成本。</strong></p>
+<ul>
+<li><p>所有操作都是自动化完成，无需用户干预</p>
+</li>
+<li><p>在实际开机过程中，可能遇到云在某个可用区资源不足的情况，</p>
+</li>
+<li><p>fastone会自动尝试从别的区域开启资源</p>
+</li>
+<li><p>如果需要的资源确实不够，又急需算力完成任务，用户还可以从</p>
+</li>
+<li><p>fastone界面选择配置接近的实例类型来补充</p>
+</li>
+</ul>
+<p><img src="/images/10" alt="image-20210519103730743"></p>
+<p>跨区域，跨机型使用，在本次实证场景没有用到。</p>
+<p>我们还可以根据GPU的需求来实现自动伸缩，下次单独聊。</p>
+<h2><span id="实证场景一云端验证">实证场景一：云端验证</span></h2><h3><span id="本地40核-vs-云端40核-vs-云端80核">本地40核 VS 云端40核 VS 云端80核</span></h3><blockquote>
+<p>结论</p>
+</blockquote>
+<ul>
+<li><p>当计算资源与任务拆分方式均为5*8核时，本地和云端的计算周期基本一致；</p>
+</li>
+<li><p>在云端将任务拆分为10<em>4核后，比5</em>8核的拆分方式计算周期减少三分之一; </p>
+</li>
+<li><p>当任务拆分方式不变，计算资源从40核增加到80核，计算周期减半；</p>
+</li>
+<li><p>当计算资源翻倍，且任务拆分方式从5<em>8核变更为20</em>4核后，计算周期减少</p>
+<p>三分之二;</p>
+</li>
+<li><p>fastone自动化部署可大幅节省用户的时间和人力成本。</p>
+<p><img src="/images/11" alt="image-20210519105030147"></p>
+</li>
+</ul>
+<p><strong>实证过程</strong></p>
+<ol>
+<li><p>本地使用40核计算资源，拆分为5*8核，运行编号为1的HSPICE任务，耗时42小时；</p>
+</li>
+<li><p>云端调度40核计算资源，拆分为5*8核，运行编号为1的HSPICE任务，耗时42小时；</p>
+</li>
+<li><p>云端调度40核计算资源，拆分为10*4核，运行编号为1的HSPICE任务，耗时28小时;</p>
+</li>
+<li><p>云端调度80核计算资源，拆分为10*8核，运行编号为1的HSPICE任务，耗时21小时；</p>
+</li>
+<li><p>云端调度80核计算资源，拆分为20*4核，运行编号为1的HSPICE任务，耗时14小时。</p>
+</li>
+</ol>
+<h2><span id="实证场景二大规模业务验证">实证场景二：大规模业务验证</span></h2><h3><span id="超大规模计算任务">超大规模计算任务</span></h3><blockquote>
+<p>结论</p>
+</blockquote>
+<ul>
+<li><p>增加计算资源并优化任务拆分方式后，云端调度1920核计算资源，将一组超</p>
+<p>大规模计算任务（共计24个HSPICE任务）的计算周期从原有的30天缩短至17</p>
+<p>小时即可完成，云端最优计算周期与本地计算周期相比，效率提升42倍；</p>
+</li>
+<li><p>由fastone平台自研的Auto-Scale功能，使平台可根据HSPICE任务状态在云</p>
+<p>端自动化构建计算集群，并根据实际需求自动伸缩，计算完成后自动销毁，在</p>
+<p>提升效率的同时有效降低成本；</p>
+</li>
+<li><p>随着计算周期的缩短，设备断电、应用崩溃等风险也相应降低，作业中断的风</p>
+<p>险也大大降低。在本实例中未发生作业中断。</p>
+<p><img src="/images/12" alt="image-20210519104521579"></p>
+</li>
+</ul>
+<p><strong>实证过程：</strong></p>
+<ol>
+<li><p>本地使用40核计算资源，拆分为5<em>8核，运行编号从0到23共计24个HSPICE任务，耗时约30天;</em></p>
+</li>
+<li><p>云端调度1920核计算资源，拆分为24组，每组为20*4核，运行编号从0到23共计24个HSPICE任务，耗时17小时；</p>
+</li>
+</ol>
+<h2><span id="实证小结">实证小结</span></h2><h3><span id="回顾一下实证目标">回顾一下实证目标</span></h3><ul>
+<li><strong>HSPICE任务在云端能高效运行；</strong></li>
+<li><strong>异构的云端资源能更好适配HSPICE任务需求，避免资源浪费；</strong></li>
+<li><strong>fastone平台有效解决了算力不足问题，效率提升42倍；</strong></li>
+<li><strong>相比手动模式，fastone平台自研的Auto-Scale功能，既能有效提升部署效率，降低部署门槛，又能大大缩短整个计算周期资源占用率，节约成本。</strong></li>
+</ul>
 
 </div>
 
